@@ -56,8 +56,8 @@ class App(QWidget):
         self.vector_slider.setEnabled(False)
         self.vector_slider.setOrientation(QtCore.Qt.Horizontal)
         self.vector_slider.setMinimum(1)
-        self.vector_slider.setMaximum(5)
-        self.vector_slider.setValue(1)
+        self.vector_slider.setMaximum(10)
+        self.vector_slider.setValue(5)
         self.vector_slider.setTickPosition(QSlider.TicksBelow)
         self.vector_slider.valueChanged.connect(self.changeValue)
 
@@ -95,7 +95,7 @@ class App(QWidget):
         msg = QMessageBox()
 
         try:
-            self.z = np.loadtxt(open(file_name, "rb"), delimiter=",", skiprows=1)
+            self.z = np.genfromtxt(file_name, delimiter=",")
 
             msg.setIcon(QMessageBox.Information)
             msg.setText("Successfully loaded {}.".format(os.path.basename(file_name)))
@@ -135,7 +135,7 @@ class App(QWidget):
         self.canvas.draw()
 
     def plotQuiver(self):
-        self.dx, self.dy = np.negative(np.gradient(self.z))
+        self.dy, self.dx = np.negative(np.gradient(self.z)) # Axis 0 = y, Axis 1 = x
 
         self.quiver = self.canvas.axes.quiver3D(self.X, self.Y, np.zeros(self.X.shape), self.dx, self.dy,
                                                 np.zeros(self.dx.shape))
@@ -148,7 +148,7 @@ class App(QWidget):
         self.quiver.remove()
 
         self.quiver = self.canvas.axes.quiver3D(self.X, self.Y, np.zeros(self.X.shape), self.dx, self.dy,
-                                                np.zeros(self.dx.shape), length=value)
+                                                np.zeros(self.dx.shape), length=value*0.2)
 
         self.canvas.draw()
 

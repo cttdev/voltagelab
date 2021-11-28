@@ -33,7 +33,7 @@ jobs:
         name: VoltageLabMacOS
         path: dist
         
-  build_macos:
+  build_windows:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2

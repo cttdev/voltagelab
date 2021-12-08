@@ -24,7 +24,7 @@ jobs:
       # We need the official Python, because the GA ones only support newer macOS versions.
       # The deployment target is picked up by the Python build tools automatically.
       PYTHON_VERSION: 3.9.1
-      MACOSX_DEPLOYMENT_TARGET: 10.10
+      MACOSX_DEPLOYMENT_TARGET: 10.9
     steps:
     - uses: actions/checkout@v2
     - name: Get Python
@@ -38,7 +38,7 @@ jobs:
         python3 --version
         python3 -m pip install --upgrade pip
         pip3 install --upgrade -r requirements.txt
-        pyinstaller -F -n=VoltageLabMacOS --clean --additional-hooks-dir=. voltage_lab.py
+        python3 -m PyInstaller -F -n=VoltageLabMacOS --clean --additional-hooks-dir=. voltage_lab.py
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
